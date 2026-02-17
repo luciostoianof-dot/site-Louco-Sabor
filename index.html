@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Louco Sabor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #d077f3;
+            --secondary-color: #6fe4f8;
+            --background-light: #f0e665;
+            --background-dark: #4a7ba7;
+            --text-light: #059905;
+            --text-dark: #2262ee;
+            --border-color-light: #e0e0e0;
+            --border-color-dark: #5e6dfc;
+            --card-background-light: #f1f88a;
+            --card-background-dark: #9dacf0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #50a4f1;
+            color: #182eee;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: #f8dd46;
+            color: #fa06e6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 20px;
+            box-shadow: 0 2px 10px rgb(183, 235, 159);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode header {
+            box-shadow: 0 2px 10px #3b4dee;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-img {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-dark-mode {
+            background-color: rgb(133, 236, 250);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-dark-mode:hover {
+            background-color: rgba(143, 204, 245, 0.993);
+            transform: scale(1.05);
+        }
+
+        nav {
+            background-color: var(--background-light);
+            border-bottom: 2px solid var(--border-color-light);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode nav {
+            background-color: #8cf1e4;
+            border-bottom-color: var(--border-color-dark);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #8730f8;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode nav a {
+            color: #2200ff;
+        }
+
+        nav a:hover {
+            color: #d66feb;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgb(253, 244, 244);
+        }
+
+        .banner h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .banner p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgb(248, 245, 245);
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background-color: var(--card-background-light);
+            border: 1px solid var(--border-color-light);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgb(160, 169, 248);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .card {
+            background-color: var(--card-background-dark);
+            border-color: #843df7;
+            box-shadow: 0 3px 10px rgb(255, 255, 255);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgb(238, 232, 232);
+        }
+
+        body.dark-mode .card:hover {
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .card h3 {
+            color: #d66feb;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background-color: var(--text-light);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode footer {
+            background-color: #70c7f0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            nav ul {
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .banner h2 {
+                font-size: 28px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+    <body>
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo-img">
+                    <img src="Imagens/448314290_1703232150416780_8514513963027468537_n.jpg" alt="Logo Louco Sabor">
+                </div>
+                <h1>Louco Sabor</h1>
+            </div>
+            <button class="toggle-dark-mode" id="darkModeToggle">🌙 Dark Mode</button>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#cardapio">Cardápio</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="banner" id="inicio">
+            <h2>Bem-vindo ao Louco Sabor</h2>
+            <p>Descubra os melhores sabores e experiências gastronômicas</p>
+            <button class="btn">Explorar Cardápio</button>
+        </div>
+
+        <h2 style="text-align: center; margin-bottom: 30px;">Nossos Destaques</h2>
+        <div class="cards-container" id="cardapio">
+            <div class="card">
+                <div class="card-img">
+                    <img src="Imagens/450884209_1012411337059583_4518402280415441836_n.webp" alt="Pizza Especial">
+                </div>
+                <h3>🍧🍨🥤Açaís de vários sabores</h3>
+                <p>Temos açaís nos sabores Morango, Banana, Natural, Cupuaçu; Maracujá, Ninho, Oreo e Nutella</p>
+                
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="Imagens/451058271_396864090056867_4911043344515141078_n.webp" alt="Hambúrguer Premium">
+                </div>
+                <h3>🍨 Sorvetes e picolés</h3>
+                <p>Picolés e sorvetes nos sabores Sonho de Valsa, Kinder Ovo, Chocolate Trufado, Mousse de Maracujá Iogurte Grego com Morango, Leitinho trufado</p>
+                
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="Imagens/451063073_486703423767823_7516299098724211591_n.webp" alt="Macarrão Artesanal">
+                </div>
+                <h3>🍕 Pizzas de vários sabores</h3>
+                <p>Massas frescas preparadas diariamente, com molhos tradicionais e receitas exclusivas do Louco Sabor.</p>
+                
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="Imagens/454614648_420753824325554_3848861222186770956_n.webp" alt="Salada Gourmet">
+                </div>
+                <h3>🍬Coberturas variadas</h3>
+                <p>Coberturas nos sabores Chocolate, Morango, Caramelo, Maracujá, Menta</p>
+                
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="Imagens/454963921_4145815769039283_1047817067578266190_n.webp" alt="Sobremesa Irresistível">
+                </div>
+                <h3>🍰 Sobremesas Irresistíveis</h3>
+                <p>Doces e sobremesas que vão adoçar seu dia. Chocolate, frutas e muito mais para satisfazer desejos.</p>
+                
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="Imagens/460694299_1202325447648164_7522655301798094444_n.webp" alt="Bebidas Refrescantes">
+                </div>
+                <h3>🍫Acompanhamentos</h3>
+                <p>Leite em Pó, Paçoca, Amendoim, Granola, Sucrilhos, Aveia, Flocos de Arroz, Chocoball, Bolinhas Pretas e Brancas, Granulado, Confette, Jujuba, Marshmallow, Canudinho de Biscoito</p>
+                
+            </div>
+        </div>
+
+        <div id="sobre" style="background-color: var(--background-light); padding: 30px; border-radius: 10px; margin-top: 40px; border: 1px solid var(--border-color-light); transition: all 0.3s ease;">
+            <body class="dark-mode" div style="background-color: #bb98f5; border-color: var(--border-color-dark);">
+            <h2 style="color: var(--primary-color); margin-bottom: 15px;">Sobre o Louco Sabor</h2>
+            <p style="line-height: 1.8; font-size: 16px;">
+                O Louco Sabor é uma açaiteria dedicada a oferecer as melhores experiências gastronômicas.
+                Com uma equipe de Profissionais experientes e ingredientes de qualidade superior, buscamos
+                transformar cada lanche em um momento memorável. Nosso compromisso é com a qualidade,
+                inovação e satisfação do nosso cliente.
+                Com formasde pagamento em dinheiro, pix ou cartão
+            </p>
+        </div>
+    </div>
+
+    <footer id="contato">
+        <p>&copy; 2026 Louco Sabor. Todos os direitos reservados.</p>
+        <p>Entre em contato: https://www.instagram.com/loucosaabor/ | Telefone: (21) 96550-5104</p>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+
+        // Verificar se o usuário tem preferência salva
+        const isDarkMode = localStorage.getItem('darkMode');
+        if (isDarkMode === 'enabled') {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.textContent = '☀️ Light Mode';
+        }
+
+        // Toggle Dark Mode
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkModeToggle.textContent = '☀️ Light Mode';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkModeToggle.textContent = '🌙 Dark Mode';
+            }
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
